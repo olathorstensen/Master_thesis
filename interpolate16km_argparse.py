@@ -24,7 +24,7 @@ source_data_path = args.input
 source_data = nc.Dataset(source_data_path)
 
 #specify list of which variables to interpolate
-input_vars = ['t2m', 'tp' ,'d2m', 'strd', 'ssrd']
+input_vars = ['air_temperature_2m', 'precipitation_flux' ,'relative_humidity_2m', 'swrd', 'lwrd']
 
 time_dim = True #True if variables that should be interpolated have a time dimension
 
@@ -35,8 +35,8 @@ choose_step = -1 #-1 to interpolate all steps
 target_xname = 'lon2D'
 target_yname = 'lat2D'
 
-source_xname = 'lon'
-source_yname = 'lat'
+source_xname = 'longitude'
+source_yname = 'latitude'
 
 #output format
 output_format = "NETCDF3_CLASSIC"

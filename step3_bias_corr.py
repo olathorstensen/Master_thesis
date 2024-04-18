@@ -12,6 +12,7 @@ parser.add_argument('--esm_list', nargs='+', required=True, help='ESMs')
 parser.add_argument('--ssp_list', nargs='+', required=True, help='Emmision scenarios')
 parser.add_argument('--start_year', type=int, required=True, help='Start year.')
 parser.add_argument('--end_year', type=int, required=True, help='End year.')
+parser.add_argument('--mcd', type=str, required=True, help='Mean climate directory path.')
 
 args = parser.parse_args()
 
@@ -19,14 +20,10 @@ esm_list = args.esm_list
 ssp_list = args.ssp_list
 start_year = args.start_year
 end_year = args.end_year
+mean_climate_path = args.mcd
 
-
-mean_climate_path = r'/work2/ola/input/ERA5/grl16_ERA5_mean79-99.nc'
-
-#start_year = 2015
-#end_year = 2100
-#esm_list = ['NorESM2-MM'] # ['ACCESS-CM2'] 
-#ssp_list = ['ssp245','ssp585'] #, 'ssp585'] # ['ssp126', 'ssp245']
+print(' ')
+print('------- Step 3 - bias correction -------')
 
 
 max_p = 10 # Replace with the desired maximum number of processes
@@ -41,7 +38,7 @@ for esm in esm_list:
     os.makedirs(f'/work2/ola/input/esm_grl16/{esm}/', exist_ok=True)
     for ssp in ssp_list:
         for year in np.arange(start_year, end_year +1, 1):
-            print(f'Calculating: {esm} {ssp} {year}')
+            print(f'Correcting: {esm} {ssp} {year}')
                 
             while len(processes) >= max_p:
                 time.sleep(2)                
@@ -66,4 +63,4 @@ for esm in esm_list:
     for process in processes:
         process.wait()
             
-   
+ 

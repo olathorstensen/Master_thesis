@@ -9,29 +9,31 @@ import os
 start_time = time.time()
 
 ## Inputs:
-esm_list = ['ACCESS-CM2'] #, 'MIROC6','FGOALS-g3'] #]CESM2    #np.loadtxt('/work2/ola/input/python/esm_list.txt', dtype=str)    
+esm_list = ['CESM2'] #, 'MIROC6','FGOALS-g3'] #]CESM2    #np.loadtxt('/work2/ola/input/python/esm_list.txt', dtype=str)    
 ssp_list =  ['ssp126','ssp245'] #,'ssp245', #,'ssp245','ssp370','ssp585'] ['ssp370','ssp585']
+mean_climate_dir = r'/work2/ola/input/ERA5/grl16_ERA5_mean79-99.nc'
 start_year_hist = 1979
 end_year_hist = 1999
-start_year = 2015
-end_year = 2100
+start_year = 2017
+end_year = 2018
 
 calc_mean    = 0    #yes = 1
-calc_anomaly = 1     #yes = 1
-interpolate  = 1     #yes = 1
-bias_corr    = 1     #yes = 1
+calc_anomaly = 0     #yes = 1
+interpolate  = 0     #yes = 1
+bias_corr    = 0     #yes = 1
 max_p = 10    # Replace with the desired maximum number of processes // can prob do 10 proc.
 nice_level = 10
 
-#--------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------
+
 exe_name = "python3"  # Replace with the actual executable name
 processes = []
 directory_path = '/work2/ola/input/python/'
 os.chdir(directory_path) #Change the working directory
-
-
-    
 processes = []
+print('------ Step 1 - Anomaly calculation -------')
+
+
 # Anomaly calculation
 for esm in esm_list:
     os.makedirs(f'/work2/ola/input/esm_anomaly_global/{esm}/', exist_ok=True)
@@ -63,16 +65,16 @@ for process in processes:
     process.wait()
 
 
-# Starts interpolation
+# Start interpolation  (step 2)
 if interpolate == 1:
     print('Initiating step 2')
-    command1 = f"python3 step2_interpolation_pwait.py --esm_list {' '.join(esm_list)}  --ssp_list {' '.join(ssp_list)} --start_year {start_year} --end_year {end_year}"
+    command1 = f"python3 step2_interpolation.py --esm_list {' '.join(esm_list)}  --ssp_list {' '.join(ssp_list)} --start_year {start_year} --end_year {end_year}"
     subprocess.call(command1, shell=True)
 
-# Starts bias correction
+# Start bias correction (step 3)
 if bias_corr == 1:
     print('Initiating step 3')
-    command2 = f"python3 step3_bias_corr.py --esm_list {' '.join(esm_list)}  --ssp_list {' '.join(ssp_list)} --start_year {start_year} --end_year {end_year}"
+    command2 = f"python3 step3_bias_corr.py --esm_list {' '.join(esm_list)}  --ssp_list {' '.join(ssp_list)} --start_year {start_year} --end_year {end_year} --mcd {mean_climate_dir}"
     subprocess.call(command2, shell=True)
     
 

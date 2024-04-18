@@ -8,7 +8,7 @@ import argparse
 
 
 print(' ')
-print('Step 2 - Interpolation script')
+print('---------- Step 2 - Interpolation script ----------')
 
 parser = argparse.ArgumentParser(description='Anomaly calcualtion script.')
 parser.add_argument('--esm_list', nargs='+', required=True, help='ESMs')
@@ -23,18 +23,6 @@ ssp_list = args.ssp_list
 start_year = args.start_year
 end_year = args.end_year
 
-print(esm_list)
-print(ssp_list)
-print(start_year)
-print(end_year)
-
-
-#ssp_list = ['ssp245','ssp585']  #['ssp370', 'ssp585']
-#esm_list = ['NorESM2-MM']     #['ACCESS-CM2']   #np.loadtxt()
-#start_year = 2015
-#end_year = 2100
-
-
     
 def main(esm_list, ssp_list, start_year, end_year):
     exe_name = "python3"  # Replace with the actual executable name
@@ -48,7 +36,7 @@ def main(esm_list, ssp_list, start_year, end_year):
         os.makedirs(f'/work2/ola/input/esm_anomaly_interp/{esm}/', exist_ok=True)
         for ssp in ssp_list:
             for year in np.arange(start_year, end_year +1, 1):
-                print(f'Calculating: {esm} {ssp} {year}')
+                print(f'Interpolating: {esm} {ssp} {year}')
                 
                 while len(processes) >= max_p:
                     time.sleep(10)
