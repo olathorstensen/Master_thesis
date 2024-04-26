@@ -1,5 +1,7 @@
 ### Input routine: Step 1 - anomaly calculation ###
 
+## This step can initate step 2 and 3 ##
+
 import netCDF4 as nc
 import numpy as np
 import time
@@ -9,18 +11,18 @@ import os
 start_time = time.time()
 
 ## Inputs:
-esm_list = ['CESM2'] #, 'MIROC6','FGOALS-g3'] #]CESM2    #np.loadtxt('/work2/ola/input/python/esm_list.txt', dtype=str)    
-ssp_list =  ['ssp126','ssp245'] #,'ssp245', #,'ssp245','ssp370','ssp585'] ['ssp370','ssp585']
+esm_list = ['CanESM5', 'CESM2-WACCM','CMCC-CM2-SR5','IPSL-CM6A-LR', 'MPI-ESM1-2-HR']  #np.loadtxt('/work2/ola/input/python/esm_list.txt', dtype=str)    
+ssp_list =  ['ssp126','ssp245','ssp370','ssp585']
 mean_climate_dir = r'/work2/ola/input/ERA5/grl16_ERA5_mean79-99.nc'
 start_year_hist = 1979
 end_year_hist = 1999
-start_year = 2017
-end_year = 2018
+start_year = 2015
+end_year = 2100
 
-calc_mean    = 0    #yes = 1
-calc_anomaly = 0     #yes = 1
-interpolate  = 0     #yes = 1
-bias_corr    = 0     #yes = 1
+calc_mean    = 1    #yes = 1
+calc_anomaly = 1     #yes = 1
+interpolate  = 1     #yes = 1
+bias_corr    = 1     #yes = 1
 max_p = 10    # Replace with the desired maximum number of processes // can prob do 10 proc.
 nice_level = 10
 

@@ -26,7 +26,7 @@ end_year = args.end_year
     
 def main(esm_list, ssp_list, start_year, end_year):
     exe_name = "python3"  # Replace with the actual executable name
-    max_p = 10 # Replace with the desired maximum number of processes
+    max_p = 8 # Replace with the desired maximum number of processes
     nice_level = 10
     processes = []
 

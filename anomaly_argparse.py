@@ -40,8 +40,9 @@ def convert_precip(old_values):
 
 def convert_humid(rh, temp):
     # Input: temp in degC, rh in %. Output: dew point [C]
-    a = 22.587 # 17.625 respect to water surface
-    b = 273.86 # 243.04 respect to water surface
+    # Eq and const. values: Alduchov and Eskridge (1995)
+    a = 17.625 # Water surface. If ice surface: 22.587
+    b = 243.04 # Water surface. If ice surface: 273.86 
     new_values = b*(np.log(rh/100) + (a*temp/(b+temp))) / (a-np.log(rh/100)-((a*temp)/(b+temp)))
     return new_values
 
